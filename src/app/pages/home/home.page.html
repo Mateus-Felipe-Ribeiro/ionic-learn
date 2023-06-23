@@ -23,10 +23,10 @@
     <ion-card-header header>
       <ion-card-subtitle>Último item</ion-card-subtitle>
     </ion-card-header>
-    <ion-button color="success" fill="clear" size="full" footer>Ver mais...</ion-button>
+    <ion-button color="success" fill="clear" size="full" footer (click)="listagem()">Ver mais...</ion-button>
   </app-pickup-call-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="success">
+    <ion-fab-button color="success" (click)="novoItem()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
