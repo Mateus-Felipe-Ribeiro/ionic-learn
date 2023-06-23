@@ -1,13 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>pickup-calls</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>My pickup-calls</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">pickup-calls</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <app-pickup-call-card [status]="'hold'" [updateAt]="'22/06/2023'" [createdAt]="'22/06/2023'" [notes]="'Alguma coisa aqui...'"></app-pickup-call-card>
+  <app-pickup-call-card [status]="'processing'" [updateAt]="'22/06/2023'" [createdAt]="'22/06/2023'" [notes]="'Alguma coisa aqui...'"></app-pickup-call-card>
+  <app-pickup-call-card [status]="'finished'" [updateAt]="'22/06/2023'" [createdAt]="'22/06/2023'" [value]="'15,00'"></app-pickup-call-card>
 </ion-content>
