@@ -1,21 +1,28 @@
 <ion-content [fullscreen]="true">
   <div class="flex-center">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title color="success">Learn Ionic</ion-card-title>
-      </ion-card-header>
+    <form [formGroup]="form">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title color="success">Learn Ionic</ion-card-title>
+        </ion-card-header>
 
-      <ion-card-content>
-        <ion-item>
-          <ion-input label="Email" labelPlacement="floating" placeholder="learn@ionic.com" type="email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input label="Senha" labelPlacement="floating" placeholder="******" type="password"></ion-input>
-        </ion-item>
-        <!-- <ion-button color="dark" fill="clear" size="full">Esqueceu sua senha?</ion-button> -->
-        <ion-button color="success" size="full" (click)="login()">Login</ion-button>
-        <ion-button color="success" fill="clear" size="full" (click)="register()">Registre-se</ion-button>
-      </ion-card-content>
-    </ion-card>
+        <ion-card-content>
+          <ion-item>
+            <ion-input label="Email" labelPlacement="floating" placeholder="learn@ionic.com" type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <app-error-message [field]="emailForm" error="required" message="Email é obrigatório."></app-error-message>
+          <app-error-message [field]="emailForm" error="email" message="Email inválido."></app-error-message>
+
+          <ion-item>
+            <ion-input label="Senha" labelPlacement="floating" placeholder="******" type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <app-error-message [field]="passwordForm" error="required" message="Senha é obrigatório."></app-error-message>
+
+          <!-- <ion-button color="dark" fill="clear" size="full">Esqueceu sua senha?</ion-button> -->
+          <ion-button color="success" size="full" (click)="login()" [disabled]="!form.valid">Login</ion-button>
+          <ion-button color="success" fill="clear" size="full" (click)="register()">Registre-se</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </form>
   </div>
 </ion-content>

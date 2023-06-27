@@ -3,6 +3,7 @@ import { LoginPage } from './login.page';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -14,7 +15,8 @@ describe('LoginPage', () => {
       declarations: [LoginPage],
       imports: [
         IonicModule.forRoot(),
-        AppRoutingModule
+        AppRoutingModule,
+        ReactiveFormsModule
       ]
     });
     fixture = TestBed.createComponent(LoginPage);
@@ -26,6 +28,12 @@ describe('LoginPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('criar formulario ao iniciar', () => {
+    component.ngOnInit();
+
+    expect(component.form).not.toBeUndefined()
+  })
 
   it('deve ir para tela home ao fazer login', fakeAsync(() => {
     spyOn(router, 'navigate');
