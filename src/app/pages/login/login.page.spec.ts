@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed, async, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { LoginPage } from './login.page';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { loadingReducer } from 'src/store/loading/loading.reducer';
 import { loginReducer } from 'src/store/login/login.reducers';
+import { AppState } from '@capacitor/app';
+import { recoverPassword, recoverPasswordFail, recoverPasswordSuccess } from 'src/store/login/login.actions';
 
 describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
   let router: Router;
   let page: any;
+  let store: Store<AppState>;
+  let toastController: ToastController;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -29,6 +33,8 @@ describe('LoginPage', () => {
 
     fixture = TestBed.createComponent(LoginPage);
     router = TestBed.get(Router);
+    store = TestBed.get(Store);
+    toastController = TestBed.get(ToastController);
 
     component = fixture.componentInstance;
     page = fixture.debugElement.nativeElement;
@@ -63,5 +69,50 @@ describe('LoginPage', () => {
     fixture.detectChanges();
     component.form.get('email')?.setValue('valid@email.com');
     page.querySelector("#recoverPasswordButton").click();
+    //@ts-ignore
+    store.select('login').subscribe(loginState => {
+      //@ts-ignore
+      expect(loginState.isRecoveringPassword).toBeTruthy();
+    })
+  })
+
+  it('mostrar loading ao recuperar senha', () => {
+    fixture.detectChanges();
+    store.dispatch(recoverPassword());
+    //@ts-ignore
+    store.select('loading').subscribe(loadingState => {
+      //@ts-ignore
+      expect(loadingState.show).toBeTruthy();
+    })
+  })
+
+  it('esconder loading e mensagem sucesso ao recuperar senha', () => {
+    spyOn(toastController, 'create');
+
+    fixture.detectChanges();
+    store.dispatch(recoverPassword());
+    store.dispatch(recoverPasswordSuccess());
+    //@ts-ignore
+    store.select('loading').subscribe(loadingState => {
+      //@ts-ignore
+      expect(loadingState.show).toBeFalsy();
+    })
+
+    expect(toastController.create).toHaveBeenCalledTimes(1);
+  })
+
+  it('esconder loading e mensagem erro ao recuperar senha', () => {
+    spyOn(toastController, 'create');
+
+    fixture.detectChanges();
+    store.dispatch(recoverPassword());
+    store.dispatch(recoverPasswordFail({error: 'message'}));
+    //@ts-ignore
+    store.select('loading').subscribe(loadingState => {
+      //@ts-ignore
+      expect(loadingState.show).toBeFalsy();
+    })
+
+    expect(toastController.create).toHaveBeenCalledTimes(1);
   })
 });
