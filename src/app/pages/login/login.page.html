@@ -19,8 +19,8 @@
           <app-error-message [field]="passwordForm" error="required" message="Senha é obrigatório."></app-error-message>
 
           <ion-button color="dark" fill="clear" size="full" [disabled]="!emailForm.valid" (click)="forgotEmailPassword()" id="recoverPasswordButton">Esqueceu sua senha?</ion-button>
-          <ion-button color="success" size="full" (click)="login()" [disabled]="!form.valid">Login</ion-button>
-          <ion-button color="success" fill="clear" size="full" (click)="register()">Registre-se</ion-button>
+          <ion-button color="success" size="full" (click)="login()" [disabled]="!form.valid" id="loginButton">Login</ion-button>
+          <ion-button color="success" fill="clear" size="full" (click)="register()" id="registerButton">Registre-se</ion-button>
         </ion-card-content>
       </ion-card>
     </form>
